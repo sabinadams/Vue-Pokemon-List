@@ -1,6 +1,6 @@
 <template>
 	<div class="container">
-		<img alt="Vue logo" src="./assets/pokemon-logo.svg" />
+		<img alt="Pokemon logo" src="./assets/pokemon-logo.svg" />
 		<div class="search-bar">
 			<input
 				class="search-box"
@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import { computed, ref } from "vue"
+import { ref } from 'vue'
 import { usePokemonList } from '@/composable/usePokemonList'
 import PokeBall from '@/components/pokeball'
 
@@ -30,19 +30,21 @@ export default {
 	setup() {
 		const { pokemon, getMorePokemon, allPokemonFound } = usePokemonList()
 		const filterText = ref('')
-		const filteredPokemon = computed( () => {
-			let filter = filterText.value
-			if (!filter.length) return pokemon.value
-			return pokemon.value.filter( poke => 
-				poke.name.toLowerCase().includes(filter.toLowerCase())
-			);
-		})
 
 		return {
-			filteredPokemon,
+			pokemon,
 			filterText,
 			getMorePokemon,
 			allPokemonFound
+		}
+	},
+	computed: {
+		filteredPokemon() {
+			let filter = this.filterText
+			if (!filter.length) return this.pokemon
+			return this.pokemon.filter( poke => 
+				poke.name.toLowerCase().includes(filter.toLowerCase())
+			)
 		}
 	},
 	components: {
