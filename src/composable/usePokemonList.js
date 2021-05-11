@@ -1,17 +1,17 @@
-import { ref, watchEffect } from "vue"
+import { ref, computed } from "vue"
 
 export function usePokemonList() {
     let pokemon = ref([])
     let lastResponse = ref({
-        next: 'https://pokeapi.co/api/v2/pokemon?limit=100'
+        next: 'https://pokeapi.co/api/v2/pokemon?limit=100',
+        count: null
     })
-    let allPokemonFound = ref(false)
+    const allPokemonFound = computed(() => {
+        return pokemon.value.length === lastResponse.value.count
+    })
+
 
     getMorePokemon()
-
-    watchEffect(() => {
-        allPokemonFound.value = pokemon.value.length === lastResponse.value.count
-    })
 
     function getMorePokemon() {
         if (allPokemonFound.value) return
