@@ -26,7 +26,7 @@ import { usePokemonList } from '@/composable/usePokemonList'
 import PokeBall from '@/components/pokeball'
 
 export default {
-	name: "App",
+	name: 'App',
 	setup() {
 		const { pokemon, getMorePokemon, allPokemonFound } = usePokemonList()
 		const filterText = ref('')
